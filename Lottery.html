@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="Style.css" rel="stylesheet" />
+    <style>
+        #header {
+            background-color: darkslategrey;
+            font-size: 50px;
+            font-weight: bold;
+            color: aliceblue;
+            width: 1200px;
+            text-align: center;
+            font-family: Calibri;
+            direction: rtl;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        #container {
+            width: 1200px;
+            text-align: center;
+            font-family: Calibri;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        body {
+            background-image: url(https://content.api.news/v3/images/bin/1bb15befbe524bb1b4ca44c243f8d1f8);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        div > table {
+            text-align: center;
+            border: solid 2px black;
+            background-color:cornflowerblue;
+        }
+        #left_div {
+            text-align: center;
+            border: solid 2px black;
+            background-color: cornflowerblue;
+        }
+
+        .col-3 {
+            position: relative;
+            top:20px;
+            left:40px;
+            width: 100px;
+            height: 150px;
+        }
+        #second_row {
+            text-align: center;
+            border: solid 2px black;
+            background-color:aliceblue;
+        }
+      
+       
+
+    </style>
+    <script>
+        var cash = 1000;
+        var cost = 100;
+        function showGame()
+        {
+            right_div();
+            left_div();
+        }
+        function gameOn()
+        {
+            if (cash == 0)
+            {
+                alert("it's not your day buddy")
+                return;
+            }
+            
+            
+            var numshuffled = shuffle(arr1);
+            var strognumshuffled = shuffle(arr);
+            var strognumlucky = strognumshuffled.slice(6);
+            var numslucky = numshuffled.slice(31);
+            console.log(strognumlucky);
+            console.log(numslucky);
+           
+            var checkboxArray = document.getElementsByClassName("CB");
+            playerArray = [];
+            var countSixNums = 0;
+            for (var i = 0; i < checkboxArray.length;i++)
+            {
+                
+                if (checkboxArray[i].checked == 1)
+                {
+                    playerArray.push(parseInt(checkboxArray[i].value))
+                    countSixNums = countSixNums+1;
+                }
+               
+            }
+            if (countSixNums > 6) {
+                alert("please pick only six numbars,try again");
+                return;
+            }
+            if (countSixNums < 6) {
+                alert("please pick six numbars,try again");
+                return;
+            }
+            console.log(playerArray);
+           
+            var radioArray = document.getElementsByClassName("ra");
+            var strognum = [];
+            var countStrongNum=0;
+            for (var j = 0; j < radioArray.length; j++)
+            {
+                
+                if (radioArray[j].checked)
+                {
+                    strognum.push(parseInt(radioArray[j].value));
+                    countStrongNum = countStrongNum + 1;
+                }
+            }
+            if (countStrongNum  < 1) {
+                alert("please pick Strong numbar,try again");
+                return;
+            }
+            console.log(strognum);
+
+
+            cash = cash - cost;
+            check4Prize(strognumlucky, numslucky, strognum, playerArray);
+
+
+        }
+
+        function checkStrongNum(array1, array2)
+        {
+            var countMatch = 0;
+            for (let i = 0; i < array1.length; i++)
+            {
+                for (let j = 0; j < array2.length; j++)
+                {
+                    if (array1[i] == array2[j])
+                    {
+                        countMatch = countMatch + 1;
+                    }
+                }
+            }
+            if (countMatch == 1) {
+                return countMatch;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+        function checkSixNumbers(array1, array2)
+        {
+            var countMatch = 0;
+            for (let i = 0; i < array1.length; i++)
+            {
+                for (let j = 0; j < array2.length; j++)
+                {
+                    if (array1[i] == array2[j])
+                    {
+                        countMatch = countMatch + 1;
+                    }
+                }
+            }
+            return countMatch;
+            
+        }
+
+        function check4Prize(strognumluckyarr, numsluckyarr, strognumarr, playerArray )
+        {
+            let CorrectGuessStrongNum = checkStrongNum(strognumarr, strognumluckyarr);
+            let CorrectGuessSixNumbers = checkSixNumbers(playerArray, numsluckyarr);
+            if (CorrectGuessStrongNum == 1 && CorrectGuessSixNumbers == 6)
+            {
+                cash = cash + 10000;
+                alert("You won The first prize ,Congratulations!");
+                return;
+            }
+
+            if (CorrectGuessStrongNum == 0 && CorrectGuessSixNumbers == 6) {
+                cash = cash + 6000;
+                alert("You won The Second prize ,Congratulations!");
+                return;
+            }
+            if (CorrectGuessStrongNum == 1 && CorrectGuessSixNumbers == 4) {
+                cash = cash + 4000;
+                alert("You won The first prize ,Congratulations!");
+                return;
+            }
+        }
+
+
+
+
+
+        var arr = [];
+        for (j = 1; j < 8; j++)
+        {
+            arr.push(j);
+        }
+
+
+        function right_div()
+        {
+            
+            let x = document.getElementById("Snum");
+            let str = "";
+
+            for (i = 0; i < 7; i++) {
+                str += '<input type="radio" class="ra" name="strongnum" value=' +arr[i]+ '/>' + arr[i];
+            }
+            x.innerHTML = str;
+        }
+
+
+        var arr1 = [];
+        for (j = 1; j < 38; j++)
+        {
+            arr1.push(j);
+        }
+
+
+        function left_div()
+        {
+            let arr1 = [];
+            let y = document.getElementById("nums");
+            let str1 = "";
+            for (j = 1; j < 38; j++) {
+                arr1.push(j);
+            }
+            for (i = 0; i < 37; i++) {
+                if (i % 7 == 0) {
+                    str1 += '<br> ';
+                    str1 += ' <input type="checkbox" class="CB" name="num"' + 'value="' + arr1[i] + '"' + '/>' + arr1[i];
+                }
+                else {
+                    str1 += ' <input type="checkbox" class="CB" name="num"' + 'value="' + arr1[i] + '"' + '/>' + arr1[i];
+                }
+
+            }
+            document.getElementById("left_div").innerHTML = str1;
+        }
+        function shuffle(array1) {
+            let currentIndex = array1.length, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (currentIndex != 0) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array1[currentIndex], array1[randomIndex]] = [
+                    array1[randomIndex], array1[currentIndex]];
+            }
+            return array1;
+        }
+    </script>
+
+</head>
+<body onload="showGame()">
+    <!------------------------------------------------------------->
+    <div class="container" id="container">
+        <!------------------------------------------------------------->
+        <div class="row" id="first_row">
+            <div id="header" class="col"><p>Lottery</p></div>
+        </div>
+        <div class="row" id="second_row">
+            <div class="col-8">
+                <h1>Please Pick Six Numbers </h1>
+            </div>
+            <div class="col-4">
+                <h1>Pick Strong Number</h1>
+            </div>
+        </div>
+        <!------------------------------------------------------------->
+        <div class="row" id="third_row">
+            <!------------------------------------------------------------->
+
+            <div class="col-8" id="left_div">
+                <div class="row">
+                    <div class="col">
+                        <table align="center">
+                            <tr>
+                                <td id="nums">6</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------->
+            
+                <div id="right_div" class="col-4">
+                    <div class="row">
+                        <div class="col">
+                            <table align="center">
+                                <tr>
+                                    <td id="Snum">  </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+            <!------------------------------------------------------------->
+        </div>
+        <!------------------------------------------------------------->
+        <div class="row" id="lasr_row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                <div class="card" id="start">
+                    <img src="pic/Lotto-icon.png" alt="start" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title"> <button type="button" class="btn btn-primary" onclick="gameOn()"><h1>Ready 2 Runmble</h1></button></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7"></div>
+        </div>
+        <!------------------------------------------------------------->
+    </div>
+    <!------------------------------------------------------------->
+</body>
+</html>
